@@ -14,7 +14,7 @@ We focused on making sure that everyone has installed Unity Editor and working i
 
 I told briefly about the Unity and gamedev basics.
 
-## Classes #2 - pending
+## Classes #2
 
 In this project I don't want to focus on creating assets for our game, so I visited Unity Asset Store and searched for decorations. I downloaded some free textures from another sites. And finally I created our cardboard armored player.
 
@@ -22,8 +22,15 @@ The sample scene looks pretty decent:
 
 ![sample scene](https://user-images.githubusercontent.com/57668948/205516133-e44288ca-2136-4595-933d-0eed18be2260.png)
 
-This week I want to focus on:
+This week we focused on:
 
 - What is `Terrain` and how to use it
 - Player controller script using `New Input System`
+
+## Classes #3 - pending
+
+We can move around our world so its time for:
+
 - The beginnings of gameplay
+- Prefabs and dynamic minefield building
+- Raycasting
