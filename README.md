@@ -27,10 +27,11 @@ This week we focused on:
 - What is `Terrain` and how to use it
 - Player controller script using `New Input System`
 
-## Classes #3 - pending
+## Classes #3
 
 We can move around our world so its time for:
 
-- The beginnings of gameplay
+- Gameplay
 - Prefabs and dynamic minefield building
 - Raycasting
+- Coroutines
