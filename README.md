@@ -35,3 +35,11 @@ We can move around our world so its time for:
 - Prefabs and dynamic minefield building
 - Raycasting
 - Coroutines
+
+## Classes #4
+
+Work on the project has resumed and next step is:
+
+- Singletons
+- Game UI
+- Main game loop

@@ -1,22 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Minefield : MonoBehaviour
 {
-	public int sizeX = 9;
-	public int sizeZ = 9;
-	public int minesCount = 10;
 	public GameObject tilePrefab;
 	public Tile[,] minefield;
 
-	// Start is called before the first frame update
-	void Start()
+	private void Start()
 	{
-		GenerateMinefield();
+		GenerateMinefield(GameManager.Singleton.sizeX, GameManager.Singleton.sizeZ, GameManager.Singleton.minesCount);
 	}
 
-	void GenerateMinefield()
+	public void GenerateMinefield(int sizeX, int sizeZ, int minesCount)
 	{
 		minefield = new Tile[sizeX, sizeZ];
         
@@ -61,7 +59,7 @@ public class Minefield : MonoBehaviour
                 for (int j = z - 1; j <= z + 1; j++)
                 {
                     // if we go out of bounds or checking center tile go back to start of loop
-                    if (j < 0 || j >= sizeX || (i == x && j == z))
+                    if (j < 0 || j >= sizeZ || (i == x && j == z))
                         continue;
 
                     minefield[i, j].minedNeighbours++;
@@ -72,7 +70,11 @@ public class Minefield : MonoBehaviour
 		}
 	}
     
-    public void DigAllNeighbours (int x, int z) {
+    public void DigAllNeighbours (int x, int z)
+    {
+	    int sizeX = GameManager.Singleton.sizeX;
+	    int sizeZ = GameManager.Singleton.sizeZ;
+		    
         // go trough all neighbours like in mines generation and call Dig() method on them
         for (int i = x - 1; i <= x + 1; i++)
         {
@@ -81,7 +83,7 @@ public class Minefield : MonoBehaviour
 
             for (int j = z - 1; j <= z + 1; j++)
             {
-                if (j < 0 || j >= sizeX || (i == x && j == z))
+                if (j < 0 || j >= sizeZ || (i == x && j == z))
                     continue;
 
                 minefield[i, j].Dig();

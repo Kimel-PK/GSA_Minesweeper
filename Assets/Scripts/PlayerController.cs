@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
 	{
 		// get reference to Rigidbody component
 		rb = GetComponent<Rigidbody>();
-		// hide cursor and lock it to center of game window (ESC to show cursor again)
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	void Update()
@@ -46,6 +44,12 @@ public class PlayerController : MonoBehaviour
 
 	public void Walk(InputAction.CallbackContext context)
 	{
+		if (GameManager.Singleton.gameOver)
+		{
+			move = Vector2.zero;
+			return;
+		}
+
 		// if move keys are pressed, read and store new input value in variable
 		if (context.performed)
 			move = context.ReadValue<Vector2>();
@@ -56,6 +60,9 @@ public class PlayerController : MonoBehaviour
 	public void Look(InputAction.CallbackContext context)
 	{
 		if (!context.performed)
+			return;
+		
+		if (GameManager.Singleton.gameOver)
 			return;
 
 		// read mouse input from current frame
@@ -79,6 +86,9 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!context.performed)
 			return;
+		
+		if (GameManager.Singleton.gameOver)
+			return;
 
 		Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
 
@@ -93,12 +103,18 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!context.performed)
 			return;
+		
+		if (GameManager.Singleton.gameOver)
+			return;
 
 		RaycastHit rHit;
 		if (!Physics.Raycast(cameraTransform.position, cameraTransform.forward, out rHit, 3f) || rHit.collider.tag != "Tile")
 			return;
 
-		rHit.collider.GetComponent<Tile>().ToggleFlag();
+		if (rHit.collider.GetComponent<Tile>().ToggleFlag())
+			GameUI.Singleton.PlacedFlags++;
+		else
+			GameUI.Singleton.PlacedFlags--;
 	}
 
 }

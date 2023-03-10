@@ -22,8 +22,7 @@ public class Tile : MonoBehaviour
 	{
 		if (isMined)
 		{
-			// TODO game over logic goes here
-			Debug.Log("Game Over!");
+			GameManager.Singleton.GameOver();
 			return;
 		}
 		
@@ -39,10 +38,10 @@ public class Tile : MonoBehaviour
 			minefield.DigAllNeighbours(x, z);
 	}
 	
-	public void ToggleFlag () {
+	public bool ToggleFlag () {
 		// tile was digged already, return
 		if (isChecked)
-			return;
+			return isFlagged;
 		
 		// if isFlagged destroy flag prefab, if is not create new flag prefab
 		if (isFlagged)
@@ -52,5 +51,7 @@ public class Tile : MonoBehaviour
 		
 		// toggle isFlagged bool
 		isFlagged = !isFlagged;
+
+		return isFlagged;
 	}
 }
