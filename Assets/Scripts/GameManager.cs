@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     
     public void BackToMenu()
     {
+        gameOver = false;
         StartCoroutine(EBackToMenu());
     }
 
