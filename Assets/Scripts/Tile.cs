@@ -39,10 +39,6 @@ public class Tile : MonoBehaviour
 	}
 	
 	public bool ToggleFlag () {
-		// tile was digged already, return
-		if (isChecked)
-			return isFlagged;
-		
 		// if isFlagged destroy flag prefab, if is not create new flag prefab
 		if (isFlagged)
 			Destroy(flagGO);

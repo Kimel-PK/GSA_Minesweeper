@@ -111,6 +111,10 @@ public class PlayerController : MonoBehaviour
 		if (!Physics.Raycast(cameraTransform.position, cameraTransform.forward, out rHit, 3f) || rHit.collider.tag != "Tile")
 			return;
 
+        // Cannot place a flag on a tile that was already digged.
+        if (rHit.collider.GetComponent<Tile>().isChecked)
+			return;
+
 		if (rHit.collider.GetComponent<Tile>().ToggleFlag())
 			GameUI.Singleton.PlacedFlags++;
 		else
