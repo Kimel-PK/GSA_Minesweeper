@@ -119,6 +119,8 @@ public class PlayerController : MonoBehaviour
 			GameUI.Singleton.PlacedFlags++;
 		else
 			GameUI.Singleton.PlacedFlags--;
+
+		GameManager.Singleton.CheckIfGameIsWon();
 	}
 
 }

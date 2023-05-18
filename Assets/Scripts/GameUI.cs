@@ -10,6 +10,7 @@ public class GameUI : MonoBehaviour
     public static GameUI Singleton { get; private set; }
     [SerializeField] private TextMeshProUGUI placedFlagsText;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameWonPanel;
     private int _placedFlags;
     public int PlacedFlags
     {
@@ -39,5 +40,10 @@ public class GameUI : MonoBehaviour
     public void ShowGameOverScreen()
     {
         gameOverPanel.SetActive(true);
+    }
+
+    public void ShowGameWonScreen()
+    {
+        gameWonPanel.SetActive(true);
     }
 }
