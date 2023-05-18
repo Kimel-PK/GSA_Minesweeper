@@ -75,7 +75,7 @@ public class Detector : MonoBehaviour
 
 	IEnumerator Beep()
 	{
-		while (!GameManager.Singleton.gameObject)
+		while (!GameManager.Singleton.gameOver)
 		{
 			// play beep for every detected mine
 			for (int i = 0; i < DetectedMines; i++)
