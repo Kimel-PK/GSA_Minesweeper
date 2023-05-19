@@ -9,6 +9,8 @@ public class GameUI : MonoBehaviour
 {
     public static GameUI Singleton { get; private set; }
     [SerializeField] private TextMeshProUGUI placedFlagsText;
+    [SerializeField] private TextMeshProUGUI minesText;
+    [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private GameObject gameOverPanel;
     private int _placedFlags;
     public int PlacedFlags
@@ -17,7 +19,7 @@ public class GameUI : MonoBehaviour
         set
         {
             _placedFlags = value;
-            placedFlagsText.text = $"Flags: {_placedFlags}/{GameManager.Singleton.minesCount}";
+            placedFlagsText.text = $"{_placedFlags}";
         }
     }
 
@@ -29,6 +31,18 @@ public class GameUI : MonoBehaviour
     private void Start()
     {
         PlacedFlags = 0;
+        minesText.text = GameManager.Singleton.minesCount.ToString();
+    }
+    
+    private void Update()
+    {
+        SetTimer();
+    }
+
+    private void SetTimer()
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds((int)GameManager.Singleton.timer);
+        timerText.text = $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
     }
 
     public void BackToMenu()

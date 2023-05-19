@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,27 +7,38 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI sizeXtext;
-    [SerializeField] private TextMeshProUGUI sizeZtext;
-    [SerializeField] private TextMeshProUGUI minesCounttext;
-    [SerializeField] private Slider sizeXslider;
-    [SerializeField] private Slider sizeZslider;
-    [SerializeField] private Slider minesCountslider;
+    [SerializeField] private TextMeshProUGUI sizeXText;
+    [SerializeField] private TextMeshProUGUI sizeZText;
+    [SerializeField] private TextMeshProUGUI minesCountText;
+    [SerializeField] private Slider sizeXSlider;
+    [SerializeField] private Slider sizeZSlider;
+    [SerializeField] private Slider minesCountSlider;
+    [SerializeField] private GameObject howToPlayPanel;
+
+    private void Start()
+    {
+        sizeXSlider.value = GameManager.Singleton.sizeX;
+        sizeZSlider.value = GameManager.Singleton.sizeZ;
+        minesCountSlider.value = GameManager.Singleton.minesCount;
+        RefreshInterface();
+    }
 
     public void RefreshInterface()
     {
         // when any slider value changes refresh UI text
-        sizeXtext.text = $"Minefield width: {sizeXslider.value.ToString()}";
-        sizeZtext.text = $"Minefield length: {sizeZslider.value.ToString()}";
-        minesCounttext.text = $"Mines count: {minesCountslider.value.ToString()}";
+        sizeXText.text = $"Minefield width: {sizeXSlider.value.ToString()}";
+        sizeZText.text = $"Minefield length: {sizeZSlider.value.ToString()}";
+        // max mines count should be dynamic depending on the minefield size
+        minesCountSlider.maxValue = sizeXSlider.value * sizeZSlider.value * 0.8f;
+        minesCountText.text = $"Mines count: {minesCountSlider.value.ToString()}";
     }
 
     public void Play()
     {
         // when button "Play" in UI is pressed, set up GameManager and call StartGame()
-        GameManager.Singleton.sizeX = (int)sizeXslider.value;
-        GameManager.Singleton.sizeZ = (int)sizeZslider.value;
-        GameManager.Singleton.minesCount = (int)minesCountslider.value;
+        GameManager.Singleton.sizeX = (int)sizeXSlider.value;
+        GameManager.Singleton.sizeZ = (int)sizeZSlider.value;
+        GameManager.Singleton.minesCount = (int)minesCountSlider.value;
         GameManager.Singleton.StartGame();
     }
 
