@@ -7,24 +7,30 @@ using Random = UnityEngine.Random;
 public class Minefield : MonoBehaviour
 {
 	public GameObject tilePrefab;
+	public GameObject playerPrefab;
 	public Tile[,] minefield;
 
 	private void Start()
 	{
+        Instantiate(playerPrefab, new Vector3(0, 0, -(GameManager.Singleton.sizeZ-1)/2f - 3 ), Quaternion.identity); // Create player.
 		GenerateMinefield(GameManager.Singleton.sizeX, GameManager.Singleton.sizeZ, GameManager.Singleton.minesCount);
 	}
 
 	public void GenerateMinefield(int sizeX, int sizeZ, int minesCount)
 	{
 		minefield = new Tile[sizeX, sizeZ];
-        
+
+        // Offsets used to place the minefiled in the middle of the scene.
+        float offsetX = (sizeX-1) / 2f;
+        float offsetZ = (sizeZ-1) / 2f;
+
         // create tiles instances
 		for (int x = 0; x < sizeX; x++)
 		{
 			for (int z = 0; z < sizeZ; z++)
 			{
                 // create new tile prefab instance
-				GameObject tmpTile = Instantiate(tilePrefab, new Vector3(x, 0, z), Quaternion.Euler(Vector3.zero), transform);
+				GameObject tmpTile = Instantiate(tilePrefab, new Vector3(x - offsetX, 0, z - offsetZ), Quaternion.Euler(Vector3.zero), transform);
                 // get Tile component and store it in array
 				minefield[x, z] = tmpTile.GetComponent<Tile>();
                 // tile uses reference to this script when calling DigAllNeighbours() method
