@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         var task = SceneManager.LoadSceneAsync(1);
         yield return new WaitUntil(() => task.isDone);
         Cursor.lockState = CursorLockMode.Locked;
+        timer = 0;
         gameOver = false;
     }
 
