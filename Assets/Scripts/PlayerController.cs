@@ -123,4 +123,9 @@ public class PlayerController : MonoBehaviour
 		GameManager.Singleton.CheckIfGameIsWon();
 	}
 
+	public void Pause(InputAction.CallbackContext context)
+	{
+		GameManager.Singleton.Pause();
+		GameUI.Singleton.Pause();
+	}
 }

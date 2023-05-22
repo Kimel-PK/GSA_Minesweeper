@@ -13,6 +13,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gameWonPanel;
+    [SerializeField] private GameObject pausePanel;
     private int _placedFlags;
     public int PlacedFlags
     {
@@ -44,6 +45,17 @@ public class GameUI : MonoBehaviour
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds((int)GameManager.Singleton.timer);
         timerText.text = $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
+    }
+
+    public void Pause()
+    {
+        pausePanel.SetActive(true);
+    }
+
+    public void Resume()
+    {
+        pausePanel.SetActive(false);
+        GameManager.Singleton.Resume();
     }
 
     public void BackToMenu()

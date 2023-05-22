@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int correctlyPlacedFlags = 0;
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
+    public bool paused;
     
     private void Awake()
     {
@@ -31,11 +32,6 @@ public class GameManager : MonoBehaviour
     {
         if (!gameOver)
             timer += Time.deltaTime;
-    }
-    
-    public void Start()
-    {
-        numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
     }
 
     public void GameOver(bool isGameWon)
@@ -90,5 +86,17 @@ public class GameManager : MonoBehaviour
         {
             GameOver(true);
         }
+    }
+
+    public void Pause()
+    {
+        paused = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    
+    public void Resume()
+    {
+        paused = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
