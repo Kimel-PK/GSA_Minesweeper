@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
     public int sizeX = 9;
     public int sizeZ = 9;
     public int minesCount = 10;
-    public bool gameOver;
+    public bool gameOver = true;
+    public double timer;
     public int correctlyPlacedFlags = 0;
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
-
-
+    
     private void Awake()
     {
         if (Singleton == null)
@@ -26,8 +26,14 @@ public class GameManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Start()
+    
+    private void Update()
+    {
+        if (!gameOver)
+            timer += Time.deltaTime;
+    }
+    
+    public void Start()
     {
         numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
     }
@@ -61,8 +67,10 @@ public class GameManager : MonoBehaviour
         var task = SceneManager.LoadSceneAsync(1);
         yield return new WaitUntil(() => task.isDone);
         Cursor.lockState = CursorLockMode.Locked;
+        timer = 0;
+        gameOver = false;
     }
-    
+
     public void BackToMenu()
     {
         gameOver = false;
