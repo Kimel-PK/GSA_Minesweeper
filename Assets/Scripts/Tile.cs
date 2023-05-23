@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
 	public GameObject flagGO;
 	public GameObject flagPrefab;
 	public ParticleSystem mud;
+	public ParticleSystem explosion;
 
 	private bool isFlagged;
 
@@ -22,7 +23,8 @@ public class Tile : MonoBehaviour
 	{
 		if (isMined)
 		{
-			GameManager.Singleton.GameOver(false);
+			explosion.Play();
+			GameManager.Singleton.GameOver(transform.position);
 			return;
 		}
 		
@@ -46,20 +48,10 @@ public class Tile : MonoBehaviour
         if (isFlagged)
 		{
             Destroy(flagGO);
-
-            if (isMined)
-            {
-                GameManager.Singleton.correctlyPlacedFlags--;
-            }
         }
 		else
 		{
             flagGO = Instantiate(flagPrefab, transform.position, Quaternion.Euler(Vector3.zero), transform);
-
-            if (isMined)
-            {
-                GameManager.Singleton.correctlyPlacedFlags++;
-            }
         }
 
 		// toggle isFlagged bool

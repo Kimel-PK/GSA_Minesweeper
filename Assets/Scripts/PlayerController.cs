@@ -6,20 +6,39 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-	public float speed = 4f;
+	public float walkingSpeed = 4f;
+	public float sprintingSpeed = 7f;
+	public float speed;
 	public float mouseSensitivity = 0.1f;
 	Rigidbody rb;
 	Vector2 move;
 	float cameraY;
 	public Transform cameraTransform;
+    AudioSource explosionAudio;
 
-	void Awake()
+    void Awake()
 	{
 		// get reference to Rigidbody component
 		rb = GetComponent<Rigidbody>();
-	}
+        explosionAudio = GetComponent<AudioSource>();
+    }
 
-	void Update()
+    void Start()
+    {
+		speed = walkingSpeed;
+    }
+
+    void OnEnable()
+    {
+		GameManager.Singleton.onMineExplosion += PlayerDeath;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Singleton.onMineExplosion -= PlayerDeath;
+    }
+
+    void Update()
 	{
 		ApplyMovement();
 		MakeStep();
@@ -55,6 +74,18 @@ public class PlayerController : MonoBehaviour
 			move = context.ReadValue<Vector2>();
 		if (context.canceled)
 			move = Vector2.zero;
+	}
+
+	public void Sprint(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			speed = sprintingSpeed;
+		}
+        if (context.canceled)
+        {
+			speed = walkingSpeed;
+		}
 	}
 
 	public void Look(InputAction.CallbackContext context)
@@ -128,4 +159,17 @@ public class PlayerController : MonoBehaviour
 		GameManager.Singleton.Pause();
 		GameUI.Singleton.Pause();
 	}
+
+    void PlayerDeath()
+    {
+		explosionAudio.Play();
+
+		// Make player less stable.
+        rb.centerOfMass = new Vector3(0, 1, -0.2f);
+        rb.constraints = RigidbodyConstraints.None;
+
+        Vector3 toExplosion = new Vector3(GameManager.Singleton.mineExplosionPosition.x - transform.position.x, 0, GameManager.Singleton.mineExplosionPosition.z - transform.position.z);
+        toExplosion = toExplosion.normalized;
+        rb.AddExplosionForce(300, transform.position + toExplosion, 10);
+    }
 }

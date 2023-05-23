@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour
     public int minesCount = 10;
     public bool gameOver = true;
     public double timer;
-    public int correctlyPlacedFlags = 0;
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
     public bool paused;
-    
+    public Vector3 mineExplosionPosition;
+    public event Action onMineExplosion;
+
     private void Awake()
     {
         if (Singleton == null)
@@ -34,14 +35,20 @@ public class GameManager : MonoBehaviour
             timer += Time.deltaTime;
     }
 
-    public void GameOver(bool isGameWon)
+
+    /// <param name="explosionPosition"> Null if game is won, mine explosion position otherwise</param>
+    public void GameOver(Vector3 ?explosionPosition)
     {
-        if (isGameWon)
+        if (explosionPosition == null)
         {
             GameUI.Singleton.ShowGameWonScreen();
         }
         else
         {
+            mineExplosionPosition = (Vector3)explosionPosition;
+            //mineExplosionPosition = new Vector3(mineExplosionPosition.x, -1, mineExplosionPosition.z);
+            
+            onMineExplosion?.Invoke();
             GameUI.Singleton.ShowGameOverScreen();
         }
 
@@ -52,9 +59,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        correctlyPlacedFlags = 0;
-        checkedTilesCount = 0;
-        numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
         StartCoroutine(EStartGame());
     }
 
@@ -65,6 +69,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         timer = 0;
         gameOver = false;
+        checkedTilesCount = 0;
+        numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
     }
 
     public void BackToMenu()
@@ -82,9 +88,9 @@ public class GameManager : MonoBehaviour
 
     public void CheckIfGameIsWon()
     {
-        if (correctlyPlacedFlags == minesCount && GameUI.Singleton.PlacedFlags == minesCount && checkedTilesCount == numberOfTilesToCheck)
+        if (checkedTilesCount == numberOfTilesToCheck)
         {
-            GameOver(true);
+            GameOver(null);
         }
     }
 
