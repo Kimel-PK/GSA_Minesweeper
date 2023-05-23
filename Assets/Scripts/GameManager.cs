@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
     public bool paused;
-    
+    public Vector3 mineExplosionPosition;
+    public event Action onMineExplosion;
+
     private void Awake()
     {
         if (Singleton == null)
@@ -34,14 +36,20 @@ public class GameManager : MonoBehaviour
             timer += Time.deltaTime;
     }
 
-    public void GameOver(bool isGameWon)
+
+    /// <param name="explosionPosition"> Null if game is won, mine explosion position otherwise</param>
+    public void GameOver(Vector3 ?explosionPosition)
     {
-        if (isGameWon)
+        if (explosionPosition == null)
         {
             GameUI.Singleton.ShowGameWonScreen();
         }
         else
         {
+            mineExplosionPosition = (Vector3)explosionPosition;
+            //mineExplosionPosition = new Vector3(mineExplosionPosition.x, -1, mineExplosionPosition.z);
+            
+            onMineExplosion?.Invoke();
             GameUI.Singleton.ShowGameOverScreen();
         }
 
@@ -84,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         if (correctlyPlacedFlags == minesCount && GameUI.Singleton.PlacedFlags == minesCount && checkedTilesCount == numberOfTilesToCheck)
         {
-            GameOver(true);
+            GameOver(null);
         }
     }
 
