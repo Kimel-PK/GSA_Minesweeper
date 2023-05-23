@@ -48,20 +48,10 @@ public class Tile : MonoBehaviour
         if (isFlagged)
 		{
             Destroy(flagGO);
-
-            if (isMined)
-            {
-                GameManager.Singleton.correctlyPlacedFlags--;
-            }
         }
 		else
 		{
             flagGO = Instantiate(flagPrefab, transform.position, Quaternion.Euler(Vector3.zero), transform);
-
-            if (isMined)
-            {
-                GameManager.Singleton.correctlyPlacedFlags++;
-            }
         }
 
 		// toggle isFlagged bool

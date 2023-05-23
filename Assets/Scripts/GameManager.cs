@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public int minesCount = 10;
     public bool gameOver = true;
     public double timer;
-    public int correctlyPlacedFlags = 0;
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
     public bool paused;
@@ -60,9 +59,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        correctlyPlacedFlags = 0;
-        checkedTilesCount = 0;
-        numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
         StartCoroutine(EStartGame());
     }
 
@@ -73,6 +69,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         timer = 0;
         gameOver = false;
+        checkedTilesCount = 0;
+        numberOfTilesToCheck = (sizeX * sizeZ) - minesCount;
     }
 
     public void BackToMenu()
@@ -90,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckIfGameIsWon()
     {
-        if (correctlyPlacedFlags == minesCount && GameUI.Singleton.PlacedFlags == minesCount && checkedTilesCount == numberOfTilesToCheck)
+        if (checkedTilesCount == numberOfTilesToCheck)
         {
             GameOver(null);
         }
