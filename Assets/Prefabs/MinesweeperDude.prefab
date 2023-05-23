@@ -231,6 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c80ad9060690c44c83213efec14d06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingSpeed: 4
+  sprintingSpeed: 7
   speed: 2.5
   mouseSensitivity: 0.1
   cameraTransform: {fileID: 2042381103810926337}
@@ -340,6 +342,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: eeb6a545-cf82-405d-a584-2aca04a7abdd
     m_ActionName: Default/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 368754419}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Sprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 97e0b93c-89d4-4ebc-a2fb-dc1f60c81979
+    m_ActionName: Default/Sprint[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Default

@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-	public float speed = 4f;
+	public float walkingSpeed = 4f;
+	public float sprintingSpeed = 7f;
+	public float speed;
 	public float mouseSensitivity = 0.1f;
 	Rigidbody rb;
 	Vector2 move;
@@ -19,6 +21,11 @@ public class PlayerController : MonoBehaviour
 		// get reference to Rigidbody component
 		rb = GetComponent<Rigidbody>();
         explosionAudio = GetComponent<AudioSource>();
+    }
+
+    void Start()
+    {
+		speed = walkingSpeed;
     }
 
     void OnEnable()
@@ -67,6 +74,18 @@ public class PlayerController : MonoBehaviour
 			move = context.ReadValue<Vector2>();
 		if (context.canceled)
 			move = Vector2.zero;
+	}
+
+	public void Sprint(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			speed = sprintingSpeed;
+		}
+        if (context.canceled)
+        {
+			speed = walkingSpeed;
+		}
 	}
 
 	public void Look(InputAction.CallbackContext context)
