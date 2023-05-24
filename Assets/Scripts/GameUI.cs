@@ -49,13 +49,16 @@ public class GameUI : MonoBehaviour
 
     public void Pause()
     {
+        GameManager.Singleton.paused = true;
+        Cursor.lockState = CursorLockMode.None;
         pausePanel.SetActive(true);
     }
 
     public void Resume()
     {
+        GameManager.Singleton.paused = false;
+        Cursor.lockState = CursorLockMode.Locked;
         pausePanel.SetActive(false);
-        GameManager.Singleton.Resume();
     }
 
     public void BackToMenu()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,7 +48,8 @@ public class PlayerController : MonoBehaviour
 	void ApplyMovement()
 	{
 		// update player position every frame
-		rb.velocity = (transform.forward * move.y + transform.right * move.x) * speed + new Vector3(0, rb.velocity.y, 0);
+		if (!GameManager.Singleton.paused)
+			rb.velocity = (transform.forward * move.y + transform.right * move.x) * speed + new Vector3(0, rb.velocity.y, 0);
 	}
 
 	void MakeStep()
@@ -90,10 +92,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Look(InputAction.CallbackContext context)
 	{
-		if (!context.performed)
-			return;
-		
-		if (GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.paused || GameManager.Singleton.gameOver)
 			return;
 
 		// read mouse input from current frame
@@ -115,10 +114,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Dig(InputAction.CallbackContext context)
 	{
-		if (!context.performed)
-			return;
-		
-		if (GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver)
 			return;
 
 		Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
@@ -132,10 +128,7 @@ public class PlayerController : MonoBehaviour
 
 	public void PlaceFlag(InputAction.CallbackContext context)
 	{
-		if (!context.performed)
-			return;
-		
-		if (GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver)
 			return;
 
 		RaycastHit rHit;
@@ -154,13 +147,7 @@ public class PlayerController : MonoBehaviour
 		GameManager.Singleton.CheckIfGameIsWon();
 	}
 
-	public void Pause(InputAction.CallbackContext context)
-	{
-		GameManager.Singleton.Pause();
-		GameUI.Singleton.Pause();
-	}
-
-    void PlayerDeath()
+	void PlayerDeath()
     {
 		explosionAudio.Play();
 
@@ -172,4 +159,9 @@ public class PlayerController : MonoBehaviour
         toExplosion = toExplosion.normalized;
         rb.AddExplosionForce(300, transform.position + toExplosion, 10);
     }
+
+	public void Pause(InputAction.CallbackContext context)
+	{
+		GameUI.Singleton.Pause();
+	}
 }

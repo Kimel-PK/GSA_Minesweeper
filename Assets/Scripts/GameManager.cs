@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     public double timer;
     public int checkedTilesCount = 0;
     public int numberOfTilesToCheck;
-    public bool paused;
     public Vector3 mineExplosionPosition;
     public event Action onMineExplosion;
+    public bool paused;
 
     private void Awake()
     {
@@ -92,17 +92,5 @@ public class GameManager : MonoBehaviour
         {
             GameOver(null);
         }
-    }
-
-    public void Pause()
-    {
-        paused = true;
-        Cursor.lockState = CursorLockMode.None;
-    }
-    
-    public void Resume()
-    {
-        paused = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 }

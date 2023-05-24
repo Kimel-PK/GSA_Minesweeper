@@ -2117,7 +2117,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.65
+  m_fontSize: 73
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3379,11 +3379,10 @@ MonoBehaviour:
   minesCount: 10
   gameOver: 0
   timer: 0
-  correctlyPlacedFlags: 0
   checkedTilesCount: 0
   numberOfTilesToCheck: 0
-  paused: 0
   mineExplosionPosition: {x: 0, y: 0, z: 0}
+  paused: 0
 --- !u!4 &2128581321
 Transform:
   m_ObjectHideFlags: 0
