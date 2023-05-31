@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public void BackToMenu()
     {
         gameOver = false;
+        paused = false;
         StartCoroutine(EBackToMenu());
     }
 
