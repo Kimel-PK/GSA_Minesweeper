@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Dig(InputAction.CallbackContext context)
 	{
-		if (!context.performed || GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver || GameManager.Singleton.paused)
 			return;
 
 		Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
 	public void PlaceFlag(InputAction.CallbackContext context)
 	{
-		if (!context.performed || GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver || GameManager.Singleton.paused)
 			return;
 
 		RaycastHit rHit;
