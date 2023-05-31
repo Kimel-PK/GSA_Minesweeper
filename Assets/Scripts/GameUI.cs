@@ -14,6 +14,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gameWonPanel;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider sensitivitySlider;
     private int _placedFlags;
     public int PlacedFlags
     {
@@ -34,6 +36,8 @@ public class GameUI : MonoBehaviour
     {
         PlacedFlags = 0;
         minesText.text = GameManager.Singleton.minesCount.ToString();
+        volumeSlider.value = GameManager.Singleton.MasterVolume;
+        sensitivitySlider.value = GameManager.Singleton.mouseSensitivity;
     }
     
     private void Update()
@@ -64,6 +68,16 @@ public class GameUI : MonoBehaviour
     public void BackToMenu()
     {
         GameManager.Singleton.BackToMenu();
+    }
+
+    public void ChangeMasterVolume()
+    {
+        GameManager.Singleton.MasterVolume = volumeSlider.value;
+    }
+
+    public void ChangeMouseSensitivity()
+    {
+        GameManager.Singleton.mouseSensitivity = sensitivitySlider.value;
     }
 
     public void ShowGameOverScreen()

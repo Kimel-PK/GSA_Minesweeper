@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 	public float walkingSpeed = 4f;
 	public float sprintingSpeed = 7f;
 	public float speed;
-	public float mouseSensitivity = 0.1f;
 	Rigidbody rb;
 	Vector2 move;
 	float cameraY;
@@ -99,7 +98,7 @@ public class PlayerController : MonoBehaviour
 		Vector2 mouseDelta = context.ReadValue<Vector2>();
 
 		// apply mouse sensitivity
-		mouseDelta *= mouseSensitivity;
+		mouseDelta *= GameManager.Singleton.mouseSensitivity;
 
 		// rotate player along Y axis
 		transform.Rotate(0, mouseDelta.x, 0);
@@ -114,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Dig(InputAction.CallbackContext context)
 	{
-		if (!context.performed || GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver || GameManager.Singleton.paused)
 			return;
 
 		Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
@@ -128,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
 	public void PlaceFlag(InputAction.CallbackContext context)
 	{
-		if (!context.performed || GameManager.Singleton.gameOver)
+		if (!context.performed || GameManager.Singleton.gameOver || GameManager.Singleton.paused)
 			return;
 
 		RaycastHit rHit;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -18,6 +19,22 @@ public class GameManager : MonoBehaviour
     public Vector3 mineExplosionPosition;
     public event Action onMineExplosion;
     public bool paused;
+    public AudioMixer mixer;
+    public float mouseSensitivity = 0.1f;
+    public float MasterVolume
+    {
+        get
+        {
+            float volume;
+            mixer.GetFloat("masterVolume", out volume);
+            return volume;
+        }
+        set
+        {
+            mixer.SetFloat("masterVolume", value);
+        }
+    }
+
 
     private void Awake()
     {
