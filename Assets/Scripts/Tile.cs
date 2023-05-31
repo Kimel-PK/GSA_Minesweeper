@@ -21,16 +21,17 @@ public class Tile : MonoBehaviour
 
 	public void Dig()
 	{
+		
+		if (isChecked || isFlagged) // can't dig again digged tile or dig flagged tile
+			return;
+		
 		if (isMined)
 		{
 			explosion.Play();
 			GameManager.Singleton.GameOver(transform.position);
 			return;
 		}
-		
-		if (isChecked || isFlagged) // can't dig again digged tile or dig flagged tile
-			return;
-		
+
 		Destroy(tileGO);
 		tileGO = Instantiate(checkedTilePrefab, transform.position, Quaternion.Euler(Vector3.zero), transform);
 		mud.Play();
@@ -40,7 +41,7 @@ public class Tile : MonoBehaviour
 
 		// if there is no mines around this tile all adjacent tiles will be automatically digged
 		if (minedNeighbours == 0)
-			minefield.DigAllNeighbours(x, z);
+			StartCoroutine(minefield.DigAllNeighbours(x, z));
 	}
 	
 	public bool ToggleFlag () {

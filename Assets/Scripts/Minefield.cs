@@ -76,11 +76,11 @@ public class Minefield : MonoBehaviour
 		}
 	}
     
-    public void DigAllNeighbours (int x, int z)
+    public IEnumerator DigAllNeighbours (int x, int z)
     {
 	    int sizeX = GameManager.Singleton.sizeX;
 	    int sizeZ = GameManager.Singleton.sizeZ;
-		    
+	    
         // go trough all neighbours like in mines generation and call Dig() method on them
         for (int i = x - 1; i <= x + 1; i++)
         {
@@ -92,6 +92,7 @@ public class Minefield : MonoBehaviour
                 if (j < 0 || j >= sizeZ || (i == x && j == z))
                     continue;
 
+                yield return new WaitForSeconds(0.2f);
                 minefield[i, j].Dig();
             }
         }
