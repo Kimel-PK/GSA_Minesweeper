@@ -14,13 +14,14 @@ public class PlayerController : MonoBehaviour
 	Vector2 move;
 	float cameraY;
 	public Transform cameraTransform;
-    AudioSource explosionAudio;
+    [SerializeField] AudioSource explosionAudio;
+    [SerializeField] AudioSource victoryAudio;
+    [SerializeField] ParticleSystem confetti;
 
     void Awake()
 	{
 		// get reference to Rigidbody component
 		rb = GetComponent<Rigidbody>();
-        explosionAudio = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -31,11 +32,14 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
 		GameManager.Singleton.onMineExplosion += PlayerDeath;
+		GameManager.Singleton.onGameWon += LaunchConfetti;
     }
 
     void OnDisable()
     {
         GameManager.Singleton.onMineExplosion -= PlayerDeath;
+        GameManager.Singleton.onGameWon -= LaunchConfetti;
+
     }
 
     void Update()
@@ -162,5 +166,11 @@ public class PlayerController : MonoBehaviour
 	public void Pause(InputAction.CallbackContext context)
 	{
 		GameUI.Singleton.Pause();
+	}
+
+	public void LaunchConfetti()
+	{
+		confetti.Play();
+		victoryAudio.Play();
 	}
 }
