@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 	public Transform cameraTransform;
     [SerializeField] AudioSource explosionAudio;
     [SerializeField] AudioSource victoryAudio;
+    [SerializeField] AudioSource flagAudio;
     [SerializeField] ParticleSystem confetti;
 
     void Awake()
@@ -141,6 +142,8 @@ public class PlayerController : MonoBehaviour
         // Cannot place a flag on a tile that was already digged.
         if (rHit.collider.GetComponent<Tile>().isChecked)
 			return;
+
+		flagAudio.Play();
 
 		if (rHit.collider.GetComponent<Tile>().ToggleFlag())
 			GameUI.Singleton.PlacedFlags++;

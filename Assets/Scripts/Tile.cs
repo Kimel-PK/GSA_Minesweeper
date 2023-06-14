@@ -16,6 +16,7 @@ public class Tile : MonoBehaviour
 	public GameObject flagPrefab;
 	public ParticleSystem mud;
 	public ParticleSystem explosion;
+	public AudioSource digAudio;
 
 	private bool isFlagged;
 
@@ -35,6 +36,7 @@ public class Tile : MonoBehaviour
 		Destroy(tileGO);
 		tileGO = Instantiate(checkedTilePrefab, transform.position, Quaternion.Euler(Vector3.zero), transform);
 		mud.Play();
+		digAudio.Play();
 		isChecked = true;
 		GameManager.Singleton.checkedTilesCount++;
 		GameManager.Singleton.CheckIfGameIsWon();
