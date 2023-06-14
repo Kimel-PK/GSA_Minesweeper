@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public int numberOfTilesToCheck;
     public Vector3 mineExplosionPosition;
     public event Action onMineExplosion;
+    public event Action onGameWon;
     public bool paused;
     public AudioMixer mixer;
     public float mouseSensitivity = 0.1f;
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         if (explosionPosition == null)
         {
+            onGameWon?.Invoke();
             GameUI.Singleton.ShowGameWonScreen();
         }
         else
