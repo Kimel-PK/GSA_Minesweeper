@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 		// the rotation of the camera is the opposite axis to the axis of the mouse so we subtract
 		cameraY -= mouseDelta.y;
 		// make sure that player cannot raise and lower camera beyond given range
-		cameraY = Mathf.Clamp(cameraY, -60f, 50f);
+		cameraY = Mathf.Clamp(cameraY, -60f, 60f);
 		// apply camera rotation
 		cameraTransform.transform.localRotation = Quaternion.Euler(cameraY, 0, 0);
 	}
