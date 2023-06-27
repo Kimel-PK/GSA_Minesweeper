@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI sizeXText;
     [SerializeField] private TextMeshProUGUI sizeZText;
     [SerializeField] private TextMeshProUGUI minesCountText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Slider sizeXSlider;
     [SerializeField] private Slider sizeZSlider;
     [SerializeField] private Slider minesCountSlider;
@@ -28,6 +29,20 @@ public class Menu : MonoBehaviour
         // when any slider value changes refresh UI text
         sizeXText.text = $"Minefield width: {sizeXSlider.value.ToString()}";
         sizeZText.text = $"Minefield length: {sizeZSlider.value.ToString()}";
+
+        // refresh high score UI text
+        double highScore;
+        (highScore, _) = GameManager.Singleton.GetHighScore(sizeXSlider.value, sizeZSlider.value, minesCountSlider.value);
+        if (highScore != Mathf.Infinity)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds((int)highScore);
+            highScoreText.text = $"High score: {timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
+        }
+        else
+        {
+            highScoreText.text = $"High score: -";
+        }
+
         // max mines count should be dynamic depending on the minefield size
         minesCountSlider.maxValue = sizeXSlider.value * sizeZSlider.value * 0.8f;
         minesCountText.text = $"Mines count: {minesCountSlider.value.ToString()}";
