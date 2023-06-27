@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     
     private void Update()
     {
-        if (!gameOver)
+        if (!gameOver && !paused)
             timer += Time.deltaTime;
     }
 
