@@ -43,3 +43,9 @@ Work on the project has resumed and next step is:
 - Singletons
 - Game UI
 - Main game loop
+
+## Finishing off
+
+- UI polish
+- Win/lose condition
+- Highscore saved locally
